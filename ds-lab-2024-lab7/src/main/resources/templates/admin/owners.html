@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Owners</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+  <h1>Owners List</h1>
+  <div th:if="${#lists.isEmpty(owners)}">
+    <p>No owners found.</p>
+  </div>
+  <div th:if="${!#lists.isEmpty(owners)}">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Actions</th>
+        <!-- Add more columns if needed -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="owner : ${owners}">
+        <td th:text="${owner.username}">Username</td>
+        <td th:text="${owner.email}">Email</td>
+        <td>
+          <!-- Link to details page -->
+          <a class="btn btn-info btn-sm" th:href="@{'/user/' + ${owner.username}}">Details</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

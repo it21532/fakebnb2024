@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Dashboard</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h1>Welcome, <span th:text="${owner.username}">Owner</span>!</h1>
+    <div th:if="${pendingApplications == null or pendingApplications.isEmpty()}">
+        <!-- If there are no pending applications, show a message -->
+        <p>No pending rental requests at the moment.</p>
+    </div>
+    <div th:if="${pendingApplications != null and !pendingApplications.isEmpty()}">
+        <h2>Pending Rental Requests</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Tenant</th>
+                <th>Property</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${pendingApplications}">
+                <td th:text="${app.tenant.username}">Tenant Username</td>
+                <td th:text="${app.property.title}">Property Title</td>
+                <td th:text="${app.status}">Status</td>
+                <td>
+                    <form th:action="@{'/owner/rentalRequests/' + ${owner.username} + '/' + ${app.id} + '/approve'}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form th:action="@{'/owner/rentalRequests/' + ${owner.username} + '/' + ${app.id} + '/reject'}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <a class="btn btn-primary" th:href="@{/property/submit}" role="button">Submit New Property</a>
+    </div>
+</div>
+</body>
+</html>

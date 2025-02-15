@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Details</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h2> <p th:text="'About ' + ${title} + '...'"></p> </h2>
+    <p> (More details about the property will be shown here.)<p>
+</div>
+</body>
+</html>

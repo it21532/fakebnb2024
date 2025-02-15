@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Property Listings</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h2>Pending Property Listings</h2>
+    <div th:if="${#lists.isEmpty(pendingProperties)}">
+        <p>No properties are pending approval.</p>
+    </div >
+    <div th:if="${!#lists.isEmpty(pendingProperties)}">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="prop : ${pendingProperties}">
+                <td th:text="${prop.id}"></td>
+                <td th:text="${prop.title}"></td>
+                <td th:text="${prop.status}"></td>
+                <td>
+                    <form th:action="@{'/admin/property/' + ${prop.id} + '/approve'}" method="post" style="display:inline">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form th:action="@{'/admin/property/' + ${prop.id} + '/reject'}" method="post" style="display:inline">
+                        <button type="submit">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

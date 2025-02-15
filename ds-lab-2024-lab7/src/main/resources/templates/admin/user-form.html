@@ -1,0 +1,43 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{page_layout/layout}">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>User Form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="main-content">-->
+<!--  <h1 th:text="${user.username} != null ? 'Edit User' : 'Create New User'">User Form</h1>-->
+<!--  &lt;!&ndash;-->
+<!--       The form action is chosen based on whether the user has a username (edit) or not (new).-->
+<!--       Adjust the URLs to match your controller mappings.-->
+<!--  &ndash;&gt;-->
+<!--  <form th:action="@{${user.username} != null ? '/admin/user/update/' + ${user.username} : '/admin/user/create'}"-->
+<!--        method="post" th:object="${user}">-->
+<!--    <div class="form-group">-->
+<!--      <label for="usernameField">Username</label>-->
+<!--      <input type="text" id="usernameField" class="form-control" th:field="*{username}"-->
+<!--             placeholder="Username" readonly="readonly"/>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="emailField">Email</label>-->
+<!--      <input type="email" id="emailField" class="form-control" th:field="*{email}"-->
+<!--             placeholder="Enter email" required/>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="passwordField">Password</label>-->
+<!--      <input type="password" id="passwordField" class="form-control" th:field="*{password}"-->
+<!--             placeholder="Enter password" required/>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="securityRoleField">Security Role</label>-->
+<!--      <input type="text" id="securityRoleField" class="form-control" th:field="*{securityRole}"-->
+<!--             placeholder="Enter role" required/>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--  </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties</title>
+    <script>
+        function toggleFilter(formId) {
+            var form = document.getElementById(formId);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div>
+        <button class="btn btn-secondary" onclick="toggleFilter('priceFilterForm')">Price Filter</button>
+        <button class="btn btn-secondary" onclick="toggleFilter('squareMetersFilterForm')">Square Meters Filter</button>
+        <button class="btn btn-secondary" onclick="toggleFilter('sortForm')">Sort Options</button>
+    </div>
+    <!-- Price Filter Form -->
+    <form id="priceFilterForm" th:action="@{/property/search}" method="get" style="display:none;" class="mb-3">
+        <div class="form-group">
+            <label for="minPrice">Minimum Price:</label>
+            <input type="number" step="0.01" class="form-control" id="minPrice" name="minPrice" placeholder="e.g. 100">
+        </div>
+        <div class="form-group">
+            <label for="maxPrice">Maximum Price:</label>
+            <input type="number" step="0.01" class="form-control" id="maxPrice" name="maxPrice" placeholder="e.g. 1000">
+        </div>
+        <input type="hidden" name="filterType" value="price">
+        <button type="submit" class="btn btn-primary">Apply Price Filter</button>
+    </form>
+    <!-- Square Meters Filter Form -->
+    <form id="squareMetersFilterForm" th:action="@{/property/search}" method="get" style="display:none;" class="mb-3">
+        <div class="form-group">
+            <label for="minSquareMeters">Minimum Square Meters:</label>
+            <input type="number" step="0.1" class="form-control" id="minSquareMeters" name="minSquareMeters" placeholder="e.g. 50">
+        </div>
+        <div class="form-group">
+            <label for="maxSquareMeters">Maximum Square Meters:</label>
+            <input type="number" step="0.1" class="form-control" id="maxSquareMeters" name="maxSquareMeters" placeholder="e.g. 200">
+        </div>
+        <input type="hidden" name="filterType" value="squareMeters">
+        <button type="submit" class="btn btn-primary">Apply Square Meters Filter</button>
+    </form>
+    <!-- Sorting Options Form -->
+    <form id="sortForm" th:action="@{/property/search}" method="get" style="display:none;" class="mb-3">
+        <div class="form-group">
+            <label for="sortCriteria">Sort By:</label>
+            <select class="form-control" id="sortCriteria" name="sortCriteria">
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="squareMetersAsc">Square Meters: Low to High</option>
+                <option value="squareMetersDesc">Square Meters: High to Low</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Sorting</button>
+    </form>
+
+    <div th:if="${!#lists.isEmpty(properties)}">
+                <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Square Meters</th>
+                <th>Owner</th>
+                <th>#Tenants</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="property : ${properties}">
+                <td th:text="${property.title}"></td>
+                <td th:text="${property.price} + '€'"></td>
+                <td th:text="${property.squareMeters} + ' m2'"></td>
+                <td>
+                    <a th:if="${property.owner != null}"
+                       th:href="@{'/owner/' + ${property.owner.username}}"
+                       th:text="${property.owner.username}"></a>
+                </td>
+                <td>
+                    <span th:if="${property.tenants != null}" th:text="${property.tenants.size()}"></span>
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" th:href="@{'/property/' + ${property.title}}">Details</a>
+                    <span  sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="btn btn-outline-light btn-sm" th:href="@{'/property/Tenantassign/' + ${property.title}}">Assign Tenant</a>
+                        </span>
+                    <span sec:authorize="hasRole('ROLE_TENANT')">
+                        <a class="btn btn-outline-success btn-sm"
+                           th:href="@{'/rental/apply/' + ${property.title}}">Request Rental</a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(properties)}">
+        No properties found!
+    </div>
+    <a sec:authorize="hasRole('ROLE_OWNER')" href="/property/submit" class="btn btn-primary" role="button">Create new property</a>
+</div>
+</body>
+</html>

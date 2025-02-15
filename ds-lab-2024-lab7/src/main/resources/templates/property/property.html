@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Submit property</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+  <form th:action="@{/property/submit}" th:object="${property}" method="post">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" class="form-control" th:field="*{title}">
+      <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}">
+      <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Property</button>
+  </form>
+</div>
+</body>
+</html>

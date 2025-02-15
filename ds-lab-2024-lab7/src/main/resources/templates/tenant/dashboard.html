@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Tenant Dashboard</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h1>Welcome, <span th:text="${tenant.username}">Tenant</span>!</h1>
+    <h2>This is your tenant dashboard.</h2>
+    <div>
+        <a class="btn btn-primary" th:href="@{/property}">Find a Property</a>
+    </div>
+    <div th:if="${#lists.isEmpty(approvedApplications)}">
+        <p>You have no approved rental applications yet.</p>
+    </div>
+    <div th:if="${!#lists.isEmpty(approvedApplications)}">
+        <h4>Approved Rental Applications</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Property Title</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${approvedApplications}">
+                <td th:text="${app.property.title}"></td>
+                <td th:text="${app.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${!#lists.isEmpty(rejectedApplications)}">
+        <h4>Rejected Rental Applications</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Property</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app : ${rejectedApplications}">
+                <td th:text="${app.property.title}">Property Title</td>
+                <td th:text="${app.status}">REJECTED</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(rejectedApplications)}">
+        <p>You have no rejected rental applications.</p>
+    </div>
+
+    <!-- You can include more tenant-specific content here -->
+</div>
+</body>
+</html>

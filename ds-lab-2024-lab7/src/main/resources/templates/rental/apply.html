@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Apply for Rental</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h2>Apply for Property Rental</h2>
+    <div>
+        <p>Property: <span th:text="${property.title}"></span></p>
+    </div>
+    <form th:action="@{'/rental/apply/' + ${property.title}}" method="post" th:object="${application}">
+        <!-- Add any additional fields for the application if needed -->
+        <button type="submit">Submit Application</button>
+    </form>
+</div>
+</body>
+</html>

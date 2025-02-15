@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Rental Applications</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h2>Pending Rental Applications</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tenant</th>
+            <th>Property</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="app : ${pendingApplications}">
+            <td th:text="${app.id}"></td>
+            <td th:text="${app.tenant.firstName} + ' ' + ${app.tenant.lastName}"></td>
+            <td th:text="${app.property.title}"></td>
+            <td th:text="${app.status}"></td>
+            <td>
+                <form th:action="@{'/rental/' + ${app.id} + '/approve'}" method="post" style="display:inline">
+                    <button type="submit">Approve</button>
+                </form>
+                <form th:action="@{'/rental/' + ${app.id} + '/reject'}" method="post" style="display:inline">
+                    <button type="submit">Reject</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
