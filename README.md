@@ -1,7 +1,7 @@
 Ο κωδικος για ολους τους χρηστες που εχω προσθεσει ενδεικτικα ειναι "123".
-πχ.  username:thanos1 password:123
-username:owner1 password:123
-username:owner2 password:123
+πχ.  username:thanos1 password:123,
+username:owner1 password:123,
+username:owner2 password:123, username:admin1 password:123
 
 Οι κωδικοι για database ειναι ηδη στο application.properties:
 spring.datasource.username=fakebnbuser
